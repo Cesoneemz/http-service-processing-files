@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data</title>
+</head>
+<body>
+    <h1>Data from File: {{ filename }}</h1>
+    <h2>Filter and Sort</h2>
+    <form action="/data" method="get">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <label for="column">Column:</label>
+        <select name="column" id="column">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <label for="value">Value:</label>
+        <input type="text" name="value" id="value">
+        <label for="sort_by">Sort By:</label>
+        <select name="sort_by" id="sort_by">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Apply">
+        <a href="/">Back to Uploads</a>
+    </form>
+    <br>
+    <table>
+        <tr>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in data %}
+        <tr>
+            {% for column in columns %}
+            <td>{{ row[column] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

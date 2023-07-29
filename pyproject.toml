@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "http-service-processing-files"
+version = "0.1.0"
+description = ""
+authors = ["Danila Gusakov <danila.gusakov@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "http_service_processing_files"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.0.3"
+flask = "^2.3.2"
+pytest = "^7.4.0"
+
+[tool.poetry.scripts]
+make_tests = "src.tests:run_tests"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
