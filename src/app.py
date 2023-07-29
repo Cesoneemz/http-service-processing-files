@@ -8,7 +8,6 @@ ALLOWED_EXTENSIONS = {'csv'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -26,7 +25,8 @@ def upload_file():
 
     if file and allowed_file(file.filename):
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-        return jsonify({"message": "File uploaded successfully"}), 200
+        files = os.listdir(app.config['UPLOAD_FOLDER'])
+        return render_template('index.html', files=files)
     else:
         return jsonify({"error": "Invalid file format. Allowed formats: csv"}), 400
 
@@ -82,7 +82,11 @@ def get_data():
     return render_template('sorted_data.html', filename=filename, columns=columns, data=data)
 
 
-if __name__ == '__main__':
+def main():
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
     app.run(debug=True, host="0.0.0.0")
+
+
+if __name__ == '__main__':
+   main()

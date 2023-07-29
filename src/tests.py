@@ -1,6 +1,6 @@
 import os
 import pytest
-from .app import app
+from app import app
 
 
 @pytest.fixture
@@ -59,3 +59,6 @@ def test_get_data(client):
 
 def run_tests():
     pytest.main()
+
+if __name__ == '__main__':
+    run_tests()

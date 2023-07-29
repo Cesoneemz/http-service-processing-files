@@ -1,16 +1,22 @@
-FROM python:3.11
+FROM python:3.11-slim AS builder
 
-RUN apt-get update && apt-get install -y libgomp1
+WORKDIR /app
+COPY poetry.lock pyproject.toml ./
+
+RUN pip3 install --no-cache-dir poetry=="1.5.1" && poetry config virtualenvs.create true
+
+RUN python3 -m venv --copies /app/venv
+RUN . /app/venv/bin/activate && poetry install
+
+FROM python:3.11-slim
+
+COPY --from=builder /app/venv /app/venv
+ENV PATH /app/venv/bin:$PATH
 
 COPY . /app
 
-RUN curl -sSL https://install.python-poetry.org | python -
-
 WORKDIR /app
-VOLUME /app/uploads
-
-RUN $HOME/.local/bin/poetry install --no-root
 
 EXPOSE 5000
 
-CMD $HOME/.local/bin/poetry run python src/app.py
+CMD python src/app.py
