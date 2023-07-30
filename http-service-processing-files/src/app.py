@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, render_template
+from pathlib import Path
 import pandas as pd
 import os
 
 app = Flask(__name__, template_folder='../templates')
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = Path('http-service-processing-files', 'uploads')
+print(UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = {'csv'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

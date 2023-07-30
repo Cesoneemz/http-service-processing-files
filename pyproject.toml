@@ -1,9 +1,15 @@
 [tool.poetry]
-name = "processing-files"
-version = "0.1.0"
+name = "http-service-processing-files"
+version = "1.0.0"
 description = ""
 authors = ["Danila Gusakov <danila.gusakov@yandex.ru>"]
-readme = "README.md"
+packages = [{ include = "http-service-processing-files" }]
+
+[tool.pytest.ini_option]
+minversion = "6.0"
+testpaths = [
+    "http-service-processing-files/tests"
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -14,9 +20,8 @@ flask = "^2.3.2"
 pytest = "^7.4.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-start-project = "src.app:main"
-make-test = "src.tests:run_tests"
+start-project = "http-service-processing-files.src.app:main"

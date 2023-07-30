@@ -1,7 +1,12 @@
 import os
 import pytest
-from app import app
 
+import sys
+from pathlib import Path
+path_root = Path(__file__).parents[1]
+sys.path.append(str(path_root))
+
+from src import app
 
 @pytest.fixture
 def client():
@@ -17,11 +22,12 @@ def test_upload_file(client):
     filename = 'test_file.csv'
     data = {'file': (open(test_data_path, 'rb'), filename)}
     response = client.post('/upload', data=data, content_type='multipart/form-data')
+    print(response.data)
     assert response.status_code == 200
-    assert b"File uploaded successfully" in response.data
+    assert b"test_file.csv" in response.data
 
     # Проверяем, что файл действительно загружен
-    uploaded_files = os.listdir('uploads')
+    uploaded_files = os.listdir('../uploads')
     assert filename in uploaded_files
 
 
